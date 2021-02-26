@@ -1,0 +1,53 @@
+use std::sync::mpsc;
+use std::thread;
+
+use rand::Rng;
+
+// Scheduler, and trait for .seconds(), .minutes(), etc.
+use clokwerk::{Scheduler, TimeUnits};
+use std::time::Duration;
+
+const MIN: i32 = 1;
+const MAX: i32 = 20;
+
+fn main() {
+    // Create a new scheduler
+    let mut scheduler = Scheduler::new();
+    scheduler.every(1.seconds()).plus(1.seconds()).run(|| println!("~~~~~~~~"));
+
+    let (tx, rx) = mpsc::channel();
+
+    let produce = thread::spawn(move || {
+        let mut list = vec![];
+        for _ in 0..10 {
+            list.push(random_one());
+        }
+        tx.send(list).unwrap();
+    });
+
+    let consume = thread::spawn(move || {
+        let mut list = rx.recv().unwrap();
+        println!("received:\n{:?}", list);
+        println!("handled:");
+        list.sort();
+        list.dedup();
+        for i in 0..5 {
+            print!("{} ",list[i]);
+        }
+    });
+
+    produce.join().unwrap();
+    consume.join().unwrap();
+
+    for _ in 1..1110 {
+        println!("1...");
+        scheduler.run_pending();
+        println!("2...");
+        thread::sleep(Duration::from_secs(1));
+    }
+}
+
+fn random_one() -> i32 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(MIN..MAX)
+}

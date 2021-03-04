@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/feuyeux/hello-queue/q"
 	"github.com/mpvl/unique"
 )
 
@@ -14,6 +15,7 @@ const (
 )
 
 func main() {
+	q.Queue()
 	ch := make(chan []int)
 	flag := make(chan bool)
 	ticker := time.NewTicker(5 * time.Second)

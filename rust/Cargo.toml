@@ -6,7 +6,4 @@ edition = "2018"
 
 [dependencies]
 rand = "0.8.3"
-crossbeam-channel = "0.5"
-crossbeam-utils = "0.8"
-clokwerk="0.3.4"
 tokio = { version = "1.2.0", features = ["full"] }

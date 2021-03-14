@@ -4,6 +4,7 @@ package median;
  * Median of Two Sorted Arrays
  * Given two sorted arrays nums1 and nums2 of size m and n respectively,
  * return the median of the two sorted arrays.
+ * https://leetcode.com/problems/median-of-two-sorted-arrays
  * <p>
  * Example 1:
  * Input: nums1 = [1,3], nums2 = [2]
@@ -29,12 +30,10 @@ package median;
  */
 public class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int total = nums1.length + nums2.length;
-        double middle = (total) / 2d + 0.5;
+        double middle = (nums1.length + nums2.length) / 2d + 0.5;
         int start1 = 0, start2 = 0;
         int leftMid = 0, rightMid = 0;
-        double i = 0;
-        while (i < middle) {
+        while (middle > 0) {
             leftMid = rightMid;
             if (start1 >= nums1.length) {
                 rightMid = nums2[start2++];
@@ -45,9 +44,9 @@ public class Solution {
             } else {
                 rightMid = nums2[start2++];
             }
-            i++;
+            middle--;
         }
-        if (i == middle) {
+        if (0 == middle) {
             return rightMid;
         } else {
             return (leftMid + rightMid) / 2d;

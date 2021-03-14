@@ -2,56 +2,19 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 
-	"github.com/feuyeux/hello-queue/q"
-	"github.com/mpvl/unique"
-)
-
-const (
-	min = 1
-	max = 20
+	"github.com/feuyeux/hello-queue/median"
 )
 
 func main() {
-	q.Queue()
-	ch := make(chan []int)
-	flag := make(chan bool)
-	ticker := time.NewTicker(5 * time.Second)
-	go produce(ticker, flag, ch)
-	go consume(ch)
-	ending(ticker, flag, ch)
-}
-func produce(ticker *time.Ticker, flag chan bool, ch chan []int) {
-	for {
-		select {
-		case <-flag:
-			return
-		case _ = <-ticker.C:
-			list := make([]int, 10)
-			for i := 0; i < 10; i++ {
-				list[i] = randomOne()
-			}
-			ch <- list
-		}
-	}
-}
-func consume(ch chan []int) {
-	for list := range ch {
-		fmt.Println("received:\n", list)
-		unique.Sort(unique.IntSlice{P: &list})
-		fmt.Println("handled:\n", list[:5])
-	}
-	fmt.Println("ch closed.")
-}
-func randomOne() int {
-	return rand.Intn((max-min)+1) + min
-}
-func ending(ticker *time.Ticker, flag chan bool, ch chan []int) {
-	time.Sleep(10 * time.Second)
-	ticker.Stop()
-	flag <- true
-	close(ch)
-	time.Sleep(3 * time.Second)
+	//queue.Queue()
+
+	fmt.Printf("output[4.5]=%3.1f\n", median.Solute([]int{1, 2, 3, 4}, []int{5, 6, 7, 8}))
+	fmt.Printf("output[4.5]=%3.1f\n", median.Solute([]int{1, 3, 5, 7}, []int{2, 4, 6, 8}))
+	fmt.Printf("output[3.0]=%3.1f\n", median.Solute([]int{1, 2, 3, 4}, []int{4}))
+	fmt.Printf("output[2.5]=%3.1f\n", median.Solute([]int{}, []int{1, 2, 3, 4}))
+	fmt.Printf("output[0]=%3.1f\n", median.Solute([]int{0, 0, 0, 0, 0}, []int{-1, 0, 0, 0, 0, 0, 1, 2}))
+	fmt.Printf("output[2.5]=%3.1f\n", median.Solute([]int{}, []int{2, 3}))
+	fmt.Printf("output[2]=%3.1f\n", median.Solute([]int{}, []int{2}))
+	fmt.Printf("output[1]=%3.1f\n", median.Solute([]int{1, 1}, []int{1, 2}))
 }

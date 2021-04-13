@@ -1,3 +1,5 @@
+package stock;
+
 /**
  * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
  * <p>
@@ -114,10 +116,10 @@ public class BestTimeToBuyAndSellStock {
         System.out.println("====");
         System.out.println("Output[2]: " + maxProfit3(new int[]{2, 4, 1}));
         System.out.println("~~~~~");
-        System.out.println("Output[7]: " + solution.maxProfit((new int[]{7, 1, 5, 3, 6, 4}));
+        System.out.println("Output[7]: " + solution.maxProfit((new int[]{7, 1, 5, 3, 6, 4})));
         System.out.println("====");
-        System.out.println("Output[4]: " + solution.maxProfit((new int[]{1, 2, 3, 4, 5}));
+        System.out.println("Output[4]: " + solution.maxProfit((new int[]{1, 2, 3, 4, 5})));
         System.out.println("====");
-        System.out.println("Output[0]: " + solution.maxProfit((new int[]{7, 6, 4, 3, 1}));
+        System.out.println("Output[0]: " + solution.maxProfit((new int[]{7, 6, 4, 3, 1})));
     }
 }

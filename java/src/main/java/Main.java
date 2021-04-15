@@ -1,5 +1,6 @@
 import median.Solution;
 
+//java -XX:+UseZGC -classpath /Users/erichan/cooding/feuyeux/hello-queue/java/target/classes Main
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
